@@ -32,17 +32,8 @@ export class CarsService {
     this.getRentData();
   }
     
-  // testing another aproach ----------------
-  private skeletonCars$: Observable<ISkeletonCar[]> = this.http.get<ISkeletonCar[]>(this.carsEndpoint);
-  private categories$: Observable<CarCategory[]> = this.http.get<CarCategory[]>(this.categoryEndpoint);
-  private branches$: Observable<Branch[]> = this.http.get<Branch[]>(this.branchEndpoint);
-
-  // ----------------------------------------
-
 
   private updateCarsState() {
-    let carsStation: Car[];
-
     let skeletonCars$: Observable<ISkeletonCar[]> = this.http.get<ISkeletonCar[]>(this.carsEndpoint);
     let categories$: Observable<CarCategory[]> = this.http.get<CarCategory[]>(this.categoryEndpoint);
     let branches$: Observable<Branch[]> = this.http.get<Branch[]>(this.branchEndpoint);
@@ -90,7 +81,7 @@ export class CarsService {
       this.http.put(this.carsEndpoint, car, this.http.getBasicHeaders()).subscribe(
         carRes => console.log(carRes)
       );
-      // this.updateCars();
+      this.updateCarsState();
 
       this.postRentHistory(rentData);
       this.getRentData();

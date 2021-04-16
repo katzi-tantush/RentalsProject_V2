@@ -1,15 +1,16 @@
 <h3>Wanna Rent This Awesome Car?</h3>
 <app-car [car]='selectedCar'></app-car>
-<!-- TODO: validate startdate as later than now and enddate as later than startdate -->
 <form [formGroup]='rentForm'>
-    Start Date: <input formControlName='contractStart'> <br>
-    Return Date: <input formControlName='contractEnd'> <br>
+    Start Date: <input type="date" #startDate formControlName='contractStart'> <br>
+    Return Date: <input type="date" formControlName='contractEnd'> <br>
 </form>
-
-<button (click)='showPrice()'>Show Price</button>
-<div *ngIf='!priceHidden'>
-    <div>
-        The Pleasure of renting this car on those dates: {{ price }}
+<button (click)='showPriceMsg()'>Show Price</button>
+<div *ngIf='priceMsgVisible'>
+    <div *ngIf='price'>
+        The pleasure of renting this metal horse: {{ price }}
     </div>
-    <button (click)='rent()'>Rent</button>
+    <div *ngIf='!price || price == 0'>
+        Please enter valid dates into the form
+    </div>
 </div>
+
