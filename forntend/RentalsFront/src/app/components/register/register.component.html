@@ -1,0 +1,23 @@
+<h3>New User Register Form</h3>
+<form [formGroup]='registerForm' (ngSubmit)='register()'>
+    <div>
+        ID: <input formControlName='id'>
+    </div>
+    <div>
+        First Name: <input formControlName='fName'>
+    </div>
+    <div>
+        Last Name: <input formControlName='lName'>
+    </div>
+    <div>
+        Date Of Birth: <input formControlName='birthDate'>
+    </div>
+    <div>
+        User Name: <input formControlName='userName'>
+    </div>
+    <div>
+        Password: <input formControlName='password'>
+    </div>
+    <!-- add image field -->
+    <button>Register</button>
+</form>

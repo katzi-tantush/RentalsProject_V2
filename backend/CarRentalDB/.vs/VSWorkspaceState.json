@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\CarRentalDB",
+    "\\CarRentalDB\\CarRentalDB",
+    "\\CarRentalDB\\CarRentalDB\\Contracts",
+    "\\CarRentalDB\\CarRentalDB\\Controllers",
+    "\\CarRentalDB\\CarRentalDB\\Models"
+  ],
+  "SelectedNode": "\\CarRentalDB\\CarRentalDB\\Program.cs",
+  "PreviewInSolutionExplorer": false
+}

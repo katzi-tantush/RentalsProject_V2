@@ -1,0 +1,17 @@
+﻿- catch unauthorized in all controllers
+(?) = optional
+(-) = need to think about it
+(x) = untested but implemented
+
+- look for other places that need model validation(-)
+- add cars (categories, images, etc) to db
+- rent operation(-)
+- return whole car view model(-)
+- implement unauthorized results for relevant controller methods
+
+- test locations
+- add authorization to all needed controllers
+
+-- IMPORTANT! go over problems log and decide what you'r going to ask
+
+-- where I left off: 

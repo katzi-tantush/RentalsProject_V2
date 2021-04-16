@@ -1,0 +1,10 @@
+    <h5>{{car.carCategory.manufacturer }} {{car.carCategory.model}}</h5> 
+    <img class="carImage" alt="car image" [src]='car.imagePath'><img/>
+    <button (click)='showDetails()'>See More</button> 
+    <div *ngIf='showCarDetails'>
+        Production Date: {{ car.carCategory.productionDate | date }} <br>
+        Gear: {{car.carCategory.automatic ? "Automatic" : "Manual"}} <br>
+        Killometer dirven: {{ car.killometerCount }} <br>
+        Available at: {{ car.branch.name }}
+        <!-- {{ car | json }} -->
+    </div>

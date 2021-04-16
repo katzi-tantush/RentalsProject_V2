@@ -1,0 +1,18 @@
+<div>
+    <a routerLink='login'>Login</a>
+</div>
+<div>
+    <a routerLink='home'>Home</a>
+</div>
+<div>
+    <a routerLink='register'>Sign Up</a>
+</div>
+<div>
+    <a routerLink='cars'>Our Cars</a>
+</div>
+<div *ngFor='let routerParams of routerOutlerParamsArr'>
+    <a [routerLink]='routerParams.path'>{{routerParams.routerTitle}}</a>
+</div>
+<div>
+    <!-- {{ user$ | async | json}} -->
+</div>

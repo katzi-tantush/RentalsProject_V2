@@ -1,0 +1,26 @@
+<h3>login page header</h3>
+<form [formGroup]='loginForm' (ngSubmit)='login()'>
+    <div>
+        UserName: <input formControlName='userName'>
+    </div>
+    <div>
+        Password: <input formControlName='password'>
+    </div>
+    <h5>dev logins:</h5>
+    <div>
+        manager: <br>
+        "userName": "mrT",
+        "password": "lknassdf229"
+    </div>
+    <div>
+        worker: <br>
+        "userName": "worker",
+        "password": "worker234"
+    </div>
+    <div>
+        user: <br>
+        "userName": "e",
+        "password": "khsdf"
+    </div>
+    <button>Login</button>
+</form>

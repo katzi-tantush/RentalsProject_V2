@@ -1,0 +1,13 @@
+<h3>
+    We Got Cars Dude - Check It
+</h3>
+<!-- {{cars$ | async | json}} -->
+<!-- <div *ngIf="(cars$ | async) as cars"> -->
+    <div class="card carCard" *ngFor='let car of cars$ | async'>
+        <!-- <div *ngIf="car"> -->
+            <app-car [car]='car'></app-car>
+            <hr>
+            <button (click)='goToRent(car)'>Rent This Car</button>
+        <!-- </div> -->
+    </div>
+<!-- </div> -->
