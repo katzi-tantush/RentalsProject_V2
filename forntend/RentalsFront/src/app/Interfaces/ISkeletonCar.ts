@@ -4,5 +4,5 @@ export interface ISkeletonCar{
     availableForRent: boolean;
     carCategoryID: number;
     branchID: number;
-    imageID: number;
+    imageID?: number;
 }

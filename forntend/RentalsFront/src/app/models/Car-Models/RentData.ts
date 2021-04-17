@@ -1,7 +1,7 @@
 export class RentData{
     id?: number;
-    contractStart: Date;
-    contractEnd: Date;
+    contractStartDate: Date;
+    contractEndDate: Date;
     carReturnDate?: Date;
 
     userID: number;

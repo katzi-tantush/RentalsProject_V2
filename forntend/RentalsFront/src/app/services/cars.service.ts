@@ -9,6 +9,7 @@ import { CarCategory } from '../models/Car-Models/CarCategory';
 import { RentData } from '../models/Car-Models/RentData';
 import { CarFactory } from '../Utils/CarFactory';
 import { HttpService } from './http.service';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class CarsService {
 
   
   constructor(
-    private http: HttpService
+    private http: HttpService,
+    private authService: AuthenticationService
   )
   {
     this.updateCarsState();
@@ -64,21 +66,30 @@ export class CarsService {
     return this.rentHistory$.asObservable();
   }
 
-  private postRentHistory(rentData:RentData) {
+  private postRentHistory(rentData: RentData) {
+    rentData.userID = this.authService.user$.getValue().id;
+    rentData.id = 0;
+
     this.http.post(this.rentedCarsEndpoint, rentData, this.http.getBasicHeaders()).subscribe(
-      rentDataRes => console.log(`Rent Data ${rentData} has been succesfully stored`)
+      rentDataRes => console.log(`Rent Data has been succesfully stored: ${JSON.stringify(rentDataRes)}`)
     );
   }
 
   rent(rentData: RentData) {
+    if (!this.authService.user$.getValue()) {
+      alert('You must be logged in as a registered user to rent cars')
+    }
+
     let car: Car = this.cars$.getValue().filter(c => c.id == rentData.carID)[0];
 
     if (!car.availableForRent) {
       alert('This car is not available for rent, please choose another')
     }
     else {
-      car.availableForRent = false;
-      this.http.put(this.carsEndpoint, car, this.http.getBasicHeaders()).subscribe(
+      let skelitizedCar: ISkeletonCar = CarFactory.carToSkeleton(car);
+      skelitizedCar.availableForRent = false;
+
+      this.http.put(this.carsEndpoint, skelitizedCar, this.http.getBasicHeaders()).subscribe(
         carRes => console.log(carRes)
       );
       this.updateCarsState();

@@ -17,4 +17,15 @@ export class CarFactory{
         }
         return car;
     }
+
+    static carToSkeleton(car: Car): ISkeletonCar {
+        let skelicar: ISkeletonCar = {
+            id: car.id,
+            killometerCount: car.killometerCount,
+            availableForRent: car.availableForRent,
+            carCategoryID: car.carCategory.id,
+            branchID: car.branch.id
+        }
+        return skelicar;
+    }
 }

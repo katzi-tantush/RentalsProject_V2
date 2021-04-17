@@ -22,4 +22,6 @@ export class Parser{
         return date;
     }
 
+    // static dateToIsoDate(date: Date) {
+    // }
 }

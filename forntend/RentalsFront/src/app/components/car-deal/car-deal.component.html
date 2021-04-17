@@ -1,16 +1,16 @@
 <h3>Wanna Rent This Awesome Car?</h3>
 <app-car [car]='selectedCar'></app-car>
 <form [formGroup]='rentForm'>
-    Start Date: <input type="date" #startDate formControlName='contractStart'> <br>
-    Return Date: <input type="date" formControlName='contractEnd'> <br>
+    Start Date: <input type="date" #startDate formControlName='contractStartDate'> <br>
+    Return Date: <input type="date" formControlName='contractEndDate'> <br>
 </form>
 <button (click)='showPriceMsg()'>Show Price</button>
 <div *ngIf='priceMsgVisible'>
-    <div *ngIf='price'>
-        The pleasure of renting this metal horse: {{ price }}
-    </div>
-    <div *ngIf='!price || price == 0'>
-        Please enter valid dates into the form
-    </div>
+        <div *ngIf="price">
+            The pleasure of renting this metal horse: {{ price }} <button (click)='rent()'>Rent</button>
+        </div>
+        <div *ngIf='!price || price == 0'>
+            Please enter valid dates into the form
+        </div>
 </div>
 

@@ -21,12 +21,12 @@ export class HttpService {
     return this.http.get<T>(`${this.baseUrl}/${endpoint}/${id ? id : ''}`);
   }
 
-  post(endpoint: string, body: any, headerHeaders?: HttpHeaders): Observable<any>{
-    return this.http.post(`${this.baseUrl}/${endpoint}`, JSON.stringify(body), {headers:headerHeaders});
+  post(endpoint: string, body: any, httpHeaders?: HttpHeaders): Observable<any>{
+    return this.http.post(`${this.baseUrl}/${endpoint}`, JSON.stringify(body), {headers:httpHeaders});
   }
 
   put<T>(endpoint: string, body: T, httpHeaders?: HttpHeaders): Observable<T>{
-    return this.http.put<T>(`${this.baseUrl}/${endpoint}`, JSON.stringify(body), {headers: this.getAuthHeaders()});
+    return this.http.put<T>(`${this.baseUrl}/${endpoint}`, JSON.stringify(body), {headers: httpHeaders});
   }
 
   delete(endpoint:string, modelId:number):Observable<any> {
