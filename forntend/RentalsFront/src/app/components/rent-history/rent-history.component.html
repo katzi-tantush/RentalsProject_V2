@@ -1,2 +1,5 @@
-<p>rent-history works!</p>
-<!-- {{ rentHistoryDataArr$ | async | json }} -->
+<h3> You'r Rent History: </h3>
+
+<div *ngFor='let rentHistory of (rentHistoryArr$ | async)' class="rentHistory">
+    <app-rent-details [rentHistory]='rentHistory'></app-rent-details>
+</div>

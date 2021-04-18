@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RentHistoryComponent } from './components/rent-history/rent-history.component';
+import { WelcomeUserComponent } from './components/welcome-user/welcome-user.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'cars', component: CarsComponent },
   { path: 'carDeal', component: CarDealComponent },
+  { path: 'welcomeUser', component: WelcomeUserComponent },
   { path: 'rentHistory', component: RentHistoryComponent },
   { path: '**', component: NotFoundComponent }
 ];

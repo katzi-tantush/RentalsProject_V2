@@ -1,8 +1,10 @@
 import { BehaviorSubject, Observable } from "rxjs";
-import { ISkeletonCar } from "../Interfaces/ISkeletonCar";
+import { ISkeletonCar } from "../models/Car-Models/ISkeletonCar";
 import { Branch } from "../models/Car-Models/Branch";
 import { Car } from "../models/Car-Models/Car";
 import { CarCategory } from "../models/Car-Models/CarCategory";
+import { RentData } from "../models/Car-Models/RentData";
+import { IRentHistory } from "../models/Car-Models/IRentHistory";
 
 export class CarFactory{
 
@@ -27,5 +29,19 @@ export class CarFactory{
             branchID: car.branch.id
         }
         return skelicar;
+    }
+
+    static builRentHistoryArr(cars: Car[], rentDataArr:RentData[]): IRentHistory[] {
+        let rentHistoryArr: IRentHistory[] = [];
+
+        rentDataArr.forEach(rentData => {
+            let rentHistory: IRentHistory = {
+            car: cars.filter(c => c.id == rentData.carID)[0],
+            rentData: rentData
+        };
+        rentHistoryArr.push(rentHistory);
+      })
+
+      return rentHistoryArr;
     }
 }

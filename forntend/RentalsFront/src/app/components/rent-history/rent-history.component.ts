@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Car } from 'src/app/models/Car-Models/Car';
+import { IRentHistory } from 'src/app/models/Car-Models/IRentHistory';
 import { RentData } from 'src/app/models/Car-Models/RentData';
 import { CarsService } from 'src/app/services/cars.service';
 import { UserService } from 'src/app/services/user.service';
@@ -11,13 +12,12 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./rent-history.component.css']
 })
 export class RentHistoryComponent implements OnInit {
-  rentHistoryDataArr$: Observable<RentData[]>;
-  rentHistoryCarsArr$: Observable<Car[]>;
+  rentHistoryArr$: Observable<IRentHistory[]>;
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    // this.rentHistoryDataArr$ = this.userService.getUserRentData();
+    this.rentHistoryArr$ = this.userService.getRentHistoryByUser();
   }
 
 }

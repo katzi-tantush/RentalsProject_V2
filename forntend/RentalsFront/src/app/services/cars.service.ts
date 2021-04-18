@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, zip } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, pipe, zip } from 'rxjs';
 import { finalize, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
-import { ISkeletonCar } from '../Interfaces/ISkeletonCar';
+import { ISkeletonCar } from '../models/Car-Models/ISkeletonCar';
 import { Branch } from '../models/Car-Models/Branch';
 import { Car } from '../models/Car-Models/Car';
 import { CarCategory } from '../models/Car-Models/CarCategory';
@@ -10,6 +10,7 @@ import { RentData } from '../models/Car-Models/RentData';
 import { CarFactory } from '../Utils/CarFactory';
 import { HttpService } from './http.service';
 import { AuthenticationService } from './authentication.service';
+import { IRentHistory } from '../models/Car-Models/IRentHistory';
 
 @Injectable({
   providedIn: 'root'
@@ -21,21 +22,21 @@ export class CarsService {
   private rentedCarsEndpoint: string = 'rentedCars';
 
   private cars$: BehaviorSubject<Car[]> = new BehaviorSubject([]);
-  private rentHistory$: BehaviorSubject<RentData[]> = new BehaviorSubject([]);
 
-  
   constructor(
     private http: HttpService,
     private authService: AuthenticationService
   )
   {
     this.updateCarsState();
-      
-    this.getRentData();
   }
     
 
   private updateCarsState() {
+    this.buildCars().subscribe(cars => this.cars$.next(cars));
+  }
+
+  private buildCars() {
     let skeletonCars$: Observable<ISkeletonCar[]> = this.http.get<ISkeletonCar[]>(this.carsEndpoint);
     let categories$: Observable<CarCategory[]> = this.http.get<CarCategory[]>(this.categoryEndpoint);
     let branches$: Observable<Branch[]> = this.http.get<Branch[]>(this.branchEndpoint);
@@ -48,22 +49,11 @@ export class CarsService {
           let car: Car = CarFactory.BuildCar(skelicar, branch, category);
           return car;
         }))
-      )
-      .subscribe(cars => this.cars$.next(cars));
+      );
   }
 
-  private getRentData() {
-    this.http.get<RentData[]>(this.rentedCarsEndpoint).subscribe(
-      rentRes => this.rentHistory$.next(rentRes)
-    );
-  }
-  
   getCarsObs(): Observable<Car[]> {
     return this.cars$.asObservable()
-  }
-
-  getRentHistoryObs(): Observable<RentData[]>{
-    return this.rentHistory$.asObservable();
   }
 
   private postRentHistory(rentData: RentData) {
@@ -95,7 +85,16 @@ export class CarsService {
       this.updateCarsState();
 
       this.postRentHistory(rentData);
-      this.getRentData();
     }
+  }
+
+  getRentHistories():Observable<IRentHistory[]> {
+    let carsObs$: Observable<Car[]> = this.buildCars();
+    let rentDataObs$: Observable<RentData[]> = this.http.get<RentData[]>(this.rentedCarsEndpoint);
+
+    return forkJoin([carsObs$, rentDataObs$]).pipe(
+      map(([cars, rentDataArr]) =>
+        CarFactory.builRentHistoryArr(cars, rentDataArr)
+      ));
   }
 }

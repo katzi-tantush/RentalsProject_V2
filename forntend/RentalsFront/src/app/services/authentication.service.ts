@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, concat, Observable } from 'rxjs';
-import { IAuthenticatedUser } from '../models/authenticatedUser';
-import { IUser } from '../models/user';
-import { IUserLoginData } from '../models/userLoginData';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { IAuthenticatedUser } from '../models/User-Models/authenticatedUser';
+import { IUser } from '../models/User-Models/user';
+import { IUserLoginData } from '../models/User-Models/userLoginData';
 import { HttpService } from './http.service';
 import { LocalStoreService } from './local-store.service';
-import { concatMap, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { ILoggedInUser } from '../models/User-Models/ILoggefInUser';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +16,13 @@ import { concatMap, map } from 'rxjs/operators';
   // TODO: decide if I want a local storage service
 export class AuthenticationService {
   user$: BehaviorSubject<IUser> = new BehaviorSubject(null);
+  loggedInUser$: BehaviorSubject<ILoggedInUser> = new BehaviorSubject(null);
 
   constructor(
     private httpService: HttpService,
-    private localStore:LocalStoreService) { }
+    private localStore: LocalStoreService,
+    private router: Router
+  ) { }
   
   login(loginData:IUserLoginData) {
     this.httpService.post('users/login', loginData, this.httpService.getBasicHeaders())
@@ -25,8 +30,8 @@ export class AuthenticationService {
       .subscribe(
         response => {
           this.user$.next(response.requestingUser);
-          this.localStore.setToken(response.responseToken);
-          console.log(response);
+          this.localStore.storeAuthenticatedUser(response);
+          this.router.navigate(['home']);
         },
         error => {
           console.log(error);
@@ -43,5 +48,14 @@ export class AuthenticationService {
       },
       error => console.log(error)
     )
+  }
+
+  setLoggedInUser() {
+    let storedUser: ILoggedInUser = this.localStore.getStoredUser();
+    this.loggedInUser$.next(storedUser);
+  }
+
+  getLoggedInUserObs(): Observable<ILoggedInUser>{
+    return this.loggedInUser$.asObservable();
   }
 }

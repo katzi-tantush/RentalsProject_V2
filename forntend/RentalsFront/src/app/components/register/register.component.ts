@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IUser } from 'src/app/models/user';
+import { IUser } from 'src/app/models/User-Models/user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Parser } from 'src/app/Utils/Parser';
 import { charCountValidator } from 'src/app/validators/charCountValidator';

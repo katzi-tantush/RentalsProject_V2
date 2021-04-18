@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserService } from 'src/app/services/user.service';
 import { RouterOutletParams } from 'src/app/Utils/RouterOutletParams';
 
 @Component({
@@ -13,10 +14,10 @@ export class TopNavComponent implements OnInit {
 
   routerOutlerParamsArr: RouterOutletParams[];
 
-  constructor(private authService:AuthenticationService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.authService.user$.subscribe(
+    this.userService.loggedInUser$.subscribe(
       userRes => {
         if (userRes) {
           this.configureRoleNavigation(userRes.role);

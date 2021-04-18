@@ -18,6 +18,8 @@ import { WorkerOptionsComponent } from './components/worker-options/worker-optio
 import { RentDetailsComponent } from './components/rent-details/rent-details.component';
 import { RentHistoryComponent } from './components/rent-history/rent-history.component';
 import { CarDealComponent } from './components/car-deal/car-deal.component';
+import { WelcomeUserComponent } from './components/welcome-user/welcome-user.component';
+import { RentHistoryViewComponent } from './components/rent-history-view/rent-history-view.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { CarDealComponent } from './components/car-deal/car-deal.component';
     RentDetailsComponent,
     RentHistoryComponent,
     CarDealComponent,
+    WelcomeUserComponent,
+    RentHistoryViewComponent,
   ],
   imports: [
     BrowserModule,
