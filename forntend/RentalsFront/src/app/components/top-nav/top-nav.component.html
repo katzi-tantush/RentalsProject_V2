@@ -10,7 +10,7 @@
 <div>
     <a routerLink='cars'>Our Cars</a>
 </div>
-<div *ngFor='let routerParams of routerOutlerParamsArr'>
+<div *ngFor='let routerParams of (routerOutlerParamsArr$ | async)'>
     <a [routerLink]='routerParams.path'>{{routerParams.routerTitle}}</a>
 </div>
 <div>

@@ -42,8 +42,19 @@ export class UserService {
     );
   }
 
-  configureRoleNavigation(userRole: string, routerOutlerParamsArr: RouterOutletParams[]) {
-    routerOutlerParamsArr = [];
+  getRouterParams(): Observable<RouterOutletParams[]>{
+    return this.loggedInUser$.pipe(
+      map(userRes => {
+        if (userRes) {
+          return this.getRoleNavigation(userRes.role)
+        }
+        return [];
+      })
+    );
+  }
+
+  private getRoleNavigation(userRole: string): RouterOutletParams[] {
+    let routerOutlerParamsArr: RouterOutletParams[] = [];
     switch (userRole) {
       case 'User':
         routerOutlerParamsArr.push(new RouterOutletParams('rentHistory', 'Rent History'));
@@ -57,5 +68,7 @@ export class UserService {
         routerOutlerParamsArr.push(new RouterOutletParams('manageUsers', 'Manage Users'));
         break;
     }
+
+    return routerOutlerParamsArr;
   }
 }

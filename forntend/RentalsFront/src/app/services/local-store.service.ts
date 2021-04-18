@@ -15,11 +15,13 @@ export class LocalStoreService {
   // sets a key value pair in local storage
   private set(itemKey:string, value: any) {
     window.localStorage.setItem(itemKey, value);
-  }
+}
+
   // sets the users token value
   setToken(value: any) {
     this.set(this.tokenKey, value);
   }
+
   // sets logged in info in local storage
   setLoggedInUser(user: IUser) {
     let loggedInUser = UserFactory.userToLoggedInUser(user);
@@ -29,9 +31,6 @@ export class LocalStoreService {
   storeAuthenticatedUser(authenticatedUser: IAuthenticatedUser) {
     this.setToken(authenticatedUser.responseToken);
     this.setLoggedInUser(authenticatedUser.requestingUser);
-
-    console.log('user: ' + JSON.stringify(this.getStoredUser()));
-    console.log('token: ' + this.getAuthToken());
   }
 
   getStoredUser(): ILoggedInUser {

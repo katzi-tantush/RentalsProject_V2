@@ -11,6 +11,8 @@ import { CarFactory } from '../Utils/CarFactory';
 import { HttpService } from './http.service';
 import { AuthenticationService } from './authentication.service';
 import { IRentHistory } from '../models/Car-Models/IRentHistory';
+import { MockDataService } from './mock-data.service';
+import { Calculator } from '../Utils/Calculator';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,8 @@ export class CarsService {
 
   constructor(
     private http: HttpService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private mockData: MockDataService
   )
   {
     this.updateCarsState();
@@ -96,5 +99,13 @@ export class CarsService {
       map(([cars, rentDataArr]) =>
         CarFactory.builRentHistoryArr(cars, rentDataArr)
       ));
+  }
+
+  calculatePrice(rentHistory: IRentHistory): number {
+    return Calculator.postReturnCost(rentHistory.rentData, this.mockData.getMockDate(),  rentHistory.car.carCategory);
+  }
+
+  returnCar(rentHistory: IRentHistory) {
+    console.log(JSON.stringify(rentHistory));
   }
 }

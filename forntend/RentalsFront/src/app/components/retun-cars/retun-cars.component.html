@@ -1,0 +1,12 @@
+<app-mock-date></app-mock-date>
+<h3>All Rented Cars:</h3>
+<div  *ngFor='let rentHistory of (rentedCars$ | async)' class="rentHistory">
+    <app-rent-details [rentHistory]='rentHistory'></app-rent-details>
+    <div *ngIf='!rentHistory.rentData.carReturnDate'>
+        <button (click)='returnCar(rentHistory)'>Return Car</button>
+        <button (click)='getContractPrice(rentHistory)'>Calculate Contract Cost</button>
+    </div>
+</div>
+<div *ngIf='contractPrice'>
+    The due price of this contract is: {{ contractPrice }}
+</div>

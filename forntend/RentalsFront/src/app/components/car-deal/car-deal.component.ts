@@ -66,7 +66,7 @@ export class CarDealComponent implements OnInit {
 
     this.rentForm.get('contractEndDate').valueChanges.subscribe(
       endChange => {
-        this.price = Calculator.timeDiffInDays(start, endChange, this.selectedCar.carCategory.dailyCost);
+        this.price = Calculator.preRentCost(start, endChange, this.selectedCar.carCategory.dailyCost);
       });
   };
 

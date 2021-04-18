@@ -20,6 +20,8 @@ import { RentHistoryComponent } from './components/rent-history/rent-history.com
 import { CarDealComponent } from './components/car-deal/car-deal.component';
 import { WelcomeUserComponent } from './components/welcome-user/welcome-user.component';
 import { RentHistoryViewComponent } from './components/rent-history-view/rent-history-view.component';
+import { RetunCarsComponent } from './components/retun-cars/retun-cars.component';
+import { MockDateComponent } from './components/mock-date/mock-date.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,8 @@ import { RentHistoryViewComponent } from './components/rent-history-view/rent-hi
     CarDealComponent,
     WelcomeUserComponent,
     RentHistoryViewComponent,
+    RetunCarsComponent,
+    MockDateComponent,
   ],
   imports: [
     BrowserModule,

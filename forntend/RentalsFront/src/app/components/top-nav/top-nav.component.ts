@@ -12,36 +12,30 @@ import { RouterOutletParams } from 'src/app/Utils/RouterOutletParams';
 export class TopNavComponent implements OnInit {
   userRole: string; 
 
-  routerOutlerParamsArr: RouterOutletParams[];
+  routerOutlerParamsArr$: Observable<RouterOutletParams[]>;
 
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userService.loggedInUser$.subscribe(
-      userRes => {
-        if (userRes) {
-          this.configureRoleNavigation(userRes.role);
-        }
-      }
-    )
+    this.routerOutlerParamsArr$ = this.userService.getRouterParams();
   }
 
-  private configureRoleNavigation(userRole: string) {
-    this.routerOutlerParamsArr = [];
-    switch (userRole) {
-      case 'User':
-        this.routerOutlerParamsArr.push(new RouterOutletParams('rentHistory', 'Rent History'));
-        break;
-      case 'Employee':
-        this.routerOutlerParamsArr.push(new RouterOutletParams('returnCars', 'Return Cars'));
-        break;
-      case 'Manager':
-        this.routerOutlerParamsArr.push(new RouterOutletParams('allRents', 'View All Rent History'));
-        this.routerOutlerParamsArr.push(new RouterOutletParams('manageCars', 'Manage Cars'));
-        this.routerOutlerParamsArr.push(new RouterOutletParams('manageUsers', 'Manage Users'));
-        break;
-    }
+  // private configureRoleNavigation(userRole: string) {
+  //   this.routerOutlerParamsArr = [];
+  //   switch (userRole) {
+  //     case 'User':
+  //       this.routerOutlerParamsArr.push(new RouterOutletParams('rentHistory', 'Rent History'));
+  //       break;
+  //     case 'Employee':
+  //       this.routerOutlerParamsArr.push(new RouterOutletParams('returnCars', 'Return Cars'));
+  //       break;
+  //     case 'Manager':
+  //       this.routerOutlerParamsArr.push(new RouterOutletParams('allRents', 'View All Rent History'));
+  //       this.routerOutlerParamsArr.push(new RouterOutletParams('manageCars', 'Manage Cars'));
+  //       this.routerOutlerParamsArr.push(new RouterOutletParams('manageUsers', 'Manage Users'));
+  //       break;
+  //   }
     
-  }
+  // }
 
 }
