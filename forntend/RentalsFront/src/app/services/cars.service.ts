@@ -170,4 +170,10 @@ export class CarsService {
   }
 
   // --------------------------------------------
+
+  deleteCar(car: Car) {
+    this.http.delete(this.carsEndpoint, car.id).subscribe(
+      res => alert('the following car was removed from the database: ' + res)
+    );
+  }
 }

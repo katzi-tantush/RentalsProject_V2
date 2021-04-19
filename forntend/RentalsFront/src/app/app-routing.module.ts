@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CarDealComponent } from './components/car-deal/car-deal.component';
 import { CarsComponent } from './components/cars/cars.component';
+import { EditCarsComponent } from './components/edit-cars/edit-cars.component';
+import { EditUsersComponent } from './components/edit-users/edit-users.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -19,7 +21,9 @@ const routes: Routes = [
   { path: 'carDeal', component: CarDealComponent },
   { path: 'welcomeUser', component: WelcomeUserComponent },
   { path: 'rentHistory', component: RentHistoryComponent },
-  { path: 'returnCars', component:RetunCarsComponent},
+  { path: 'returnCars', component: RetunCarsComponent },
+  { path: 'editCars', component: EditCarsComponent },
+  { path: 'editUsers', component: EditUsersComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -7,20 +7,27 @@ import { AuthenticationService } from './authentication.service';
 import { CarsService } from './cars.service';
 import { ILoggedInUser } from '../models/User-Models/ILoggefInUser';
 import { RouterOutletParams } from '../Utils/RouterOutletParams';
+import { IUser } from '../models/User-Models/user';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private usersEndpoint: string = 'users';
+
   loggedInUser$: Observable<ILoggedInUser>;
   selectedCar: Car;
+  private allUsers$: BehaviorSubject<IUser> = new BehaviorSubject(null);
 
   constructor(
     private authService: AuthenticationService,
-    private carService: CarsService
+    private carService: CarsService,
+    private http: HttpService
   ) {
     this.loggedInUser$ = authService.getLoggedInUserObs();
-   }
+    this.updateUsers();
+  }
 
   calculatePreRentCost(start: Date, end: Date): number {
     let millisecondsDiff: number = Math.abs(+start - +end);
@@ -60,17 +67,25 @@ export class UserService {
         routerOutlerParamsArr.push(new RouterOutletParams('rentHistory', 'Rent History'));
         break;
       case 'Employee':
-        routerOutlerParamsArr.push(new RouterOutletParams('returnCars', 'Return Cars'));
+        routerOutlerParamsArr.push(new RouterOutletParams('returnCars', 'View And Edit Current Contracts'));
         break;
       case 'Manager':
-        routerOutlerParamsArr.push(new RouterOutletParams('allRents', 'View All Rent History'));
-        routerOutlerParamsArr.push(new RouterOutletParams('manageCars', 'Manage Cars'));
-        routerOutlerParamsArr.push(new RouterOutletParams('manageUsers', 'Manage Users'));
+        routerOutlerParamsArr.push(new RouterOutletParams('returnCars', 'View And Edit Current Contracts'));
+        routerOutlerParamsArr.push(new RouterOutletParams('editCars', 'Edit Cars'));
+        routerOutlerParamsArr.push(new RouterOutletParams('editUsers', 'Edit Users'));
         break;
     }
 
     return routerOutlerParamsArr;
   }
 
+  private updateUsers() {
+    this.http.get<IUser>(this.usersEndpoint, null, this.http.getAuthHeaders()).subscribe(
+      ussersRes => this.allUsers$.next(ussersRes)
+    )
+  }
 
+  getUsersObs(): Observable<IUser>{
+    return this.allUsers$.asObservable();
+  }
 }

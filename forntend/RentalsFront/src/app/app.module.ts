@@ -22,6 +22,9 @@ import { WelcomeUserComponent } from './components/welcome-user/welcome-user.com
 import { RentHistoryViewComponent } from './components/rent-history-view/rent-history-view.component';
 import { RetunCarsComponent } from './components/retun-cars/retun-cars.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { EditCarsComponent } from './components/edit-cars/edit-cars.component';
+import { EditUsersComponent } from './components/edit-users/edit-users.component';
+import { RoleFilterPipe } from './pipes/role-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -42,6 +45,9 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
     RentHistoryViewComponent,
     RetunCarsComponent,
     DatePickerComponent,
+    EditCarsComponent,
+    EditUsersComponent,
+    RoleFilterPipe,
   ],
   imports: [
     BrowserModule,

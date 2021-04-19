@@ -17,8 +17,8 @@ export class HttpService {
   ) { }
   
   // Rest Verbs ---------------------------------------
-  get<T>(endpoint:string, id?:number):Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}/${endpoint}/${id ? id : ''}`);
+  get<T>(endpoint:string, id?:number, httpHeaders?: HttpHeaders):Observable<T> {
+    return this.http.get<T>(`${this.baseUrl}/${endpoint}/${id ? id : ''}`, {headers: httpHeaders});
   }
 
   post(endpoint: string, body: any, httpHeaders?: HttpHeaders): Observable<any>{
@@ -30,7 +30,7 @@ export class HttpService {
   }
 
   delete(endpoint:string, modelId:number):Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${endpoint}/${modelId}`);
+    return this.http.delete(`${this.baseUrl}/${endpoint}/${modelId}`, {headers: this.getAuthHeaders()});
   }
 
   // Headers setters ---------------------------------------

@@ -48,7 +48,6 @@ export class RegisterComponent implements OnInit {
     this.newUser.imageId = null;
     this.newUser.role = 'User';
     
-    this.newUser.birthDate = Parser.shortDateToString(this.newUser.birthDate);
     this.authenticationService.register(this.newUser);
   }
 

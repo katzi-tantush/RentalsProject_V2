@@ -1,0 +1,5 @@
+<h3>Edit Cars</h3>
+<div *ngFor='let car of (cars$ | async)' class="car card">
+    <app-car [car]='car'></app-car>
+    <button (click)='deleteCar(car)'>Delete Car</button>
+</div>
