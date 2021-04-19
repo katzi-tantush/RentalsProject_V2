@@ -11,8 +11,8 @@ import { CarFactory } from '../Utils/CarFactory';
 import { HttpService } from './http.service';
 import { AuthenticationService } from './authentication.service';
 import { IRentHistory } from '../models/Car-Models/IRentHistory';
-import { MockDataService } from './mock-data.service';
 import { Calculator } from '../Utils/Calculator';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +24,11 @@ export class CarsService {
   private rentedCarsEndpoint: string = 'rentedCars';
 
   private cars$: BehaviorSubject<Car[]> = new BehaviorSubject([]);
+  private returnDate$: BehaviorSubject<Date> = new BehaviorSubject(null);
 
   constructor(
     private http: HttpService,
     private authService: AuthenticationService,
-    private mockData: MockDataService
   )
   {
     this.updateCarsState();
@@ -102,10 +102,19 @@ export class CarsService {
   }
 
   calculatePrice(rentHistory: IRentHistory): number {
-    return Calculator.postReturnCost(rentHistory.rentData, this.mockData.getMockDate(),  rentHistory.car.carCategory);
+    return Calculator.postReturnCost(rentHistory.rentData, this.getReturnDate(),  rentHistory.car.carCategory);
   }
 
   returnCar(rentHistory: IRentHistory) {
     console.log(JSON.stringify(rentHistory));
   }
+
+  setReturnDate(date: Date) {
+    this.returnDate$.next(date);
+  }
+
+  getReturnDate():Date {
+    return this.returnDate$.getValue();
+  }
+
 }

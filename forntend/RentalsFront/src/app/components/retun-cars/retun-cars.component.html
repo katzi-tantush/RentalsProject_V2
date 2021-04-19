@@ -1,8 +1,8 @@
-<app-mock-date></app-mock-date>
+<app-date-picker></app-date-picker>
 <h3>All Rented Cars:</h3>
 <div  *ngFor='let rentHistory of (rentedCars$ | async)' class="rentHistory">
+    <div *ngIf='!rentHistory.car.availableForRent'>
     <app-rent-details [rentHistory]='rentHistory'></app-rent-details>
-    <div *ngIf='!rentHistory.rentData.carReturnDate'>
         <button (click)='returnCar(rentHistory)'>Return Car</button>
         <button (click)='getContractPrice(rentHistory)'>Calculate Contract Cost</button>
     </div>

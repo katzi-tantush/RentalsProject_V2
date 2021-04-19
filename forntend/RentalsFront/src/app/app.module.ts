@@ -21,7 +21,7 @@ import { CarDealComponent } from './components/car-deal/car-deal.component';
 import { WelcomeUserComponent } from './components/welcome-user/welcome-user.component';
 import { RentHistoryViewComponent } from './components/rent-history-view/rent-history-view.component';
 import { RetunCarsComponent } from './components/retun-cars/retun-cars.component';
-import { MockDateComponent } from './components/mock-date/mock-date.component';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { MockDateComponent } from './components/mock-date/mock-date.component';
     WelcomeUserComponent,
     RentHistoryViewComponent,
     RetunCarsComponent,
-    MockDateComponent,
+    DatePickerComponent,
   ],
   imports: [
     BrowserModule,

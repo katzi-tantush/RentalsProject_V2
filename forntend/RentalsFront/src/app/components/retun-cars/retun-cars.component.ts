@@ -10,7 +10,6 @@ import { CarsService } from 'src/app/services/cars.service';
 })
 export class RetunCarsComponent implements OnInit {
   rentedCars$: Observable<IRentHistory[]>;
-  hideContractPrice: boolean = true;
   contractPrice: number;
 
   constructor(private carService: CarsService) { }
