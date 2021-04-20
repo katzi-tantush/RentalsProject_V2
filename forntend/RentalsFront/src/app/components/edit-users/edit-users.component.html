@@ -1,6 +1,9 @@
 <h3>Our Registered Users</h3>
 <div *ngFor='let user of (users$ | async) | roleFilter' class="card">
     <h6>Full Name: {{ user.fName }} {{ user.lName }} <br>
-        Role: {{ user.role }}</h6><button>Edit User</button>
+        Role: {{ user.role }}</h6><button (click)='showUserForm()'>Edit User</button>
+        <div *ngIf='userFormVisible'>
+            <app-edit-user-form [user]='user'></app-edit-user-form>
+        </div>
 </div>
 <!-- {{ users$ | async | json }} -->

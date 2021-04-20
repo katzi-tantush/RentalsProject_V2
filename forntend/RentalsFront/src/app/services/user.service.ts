@@ -9,16 +9,18 @@ import { ILoggedInUser } from '../models/User-Models/ILoggefInUser';
 import { RouterOutletParams } from '../Utils/RouterOutletParams';
 import { IUser } from '../models/User-Models/user';
 import { HttpService } from './http.service';
+import { roles } from '../constants/roles';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private usersEndpoint: string = 'users';
+  userRoles: string[] = roles;
 
+  private allUsers$: BehaviorSubject<IUser> = new BehaviorSubject(null);
   loggedInUser$: Observable<ILoggedInUser>;
   selectedCar: Car;
-  private allUsers$: BehaviorSubject<IUser> = new BehaviorSubject(null);
 
   constructor(
     private authService: AuthenticationService,
@@ -26,7 +28,7 @@ export class UserService {
     private http: HttpService
   ) {
     this.loggedInUser$ = authService.getLoggedInUserObs();
-    this.updateUsers();
+    this.updateUsersState();
   }
 
   calculatePreRentCost(start: Date, end: Date): number {
@@ -79,7 +81,7 @@ export class UserService {
     return routerOutlerParamsArr;
   }
 
-  private updateUsers() {
+  private updateUsersState() {
     this.http.get<IUser>(this.usersEndpoint, null, this.http.getAuthHeaders()).subscribe(
       ussersRes => this.allUsers$.next(ussersRes)
     )
@@ -87,5 +89,12 @@ export class UserService {
 
   getUsersObs(): Observable<IUser>{
     return this.allUsers$.asObservable();
+  }
+
+  putUser(modifiedUser: IUser) {
+    this.http.put(this.usersEndpoint, modifiedUser, this.http.getAuthHeaders())
+      .subscribe(userRes => console.log(userRes));
+    
+    this.updateUsersState();
   }
 }

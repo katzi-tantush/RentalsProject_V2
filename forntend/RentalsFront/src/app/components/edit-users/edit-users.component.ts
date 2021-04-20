@@ -10,6 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EditUsersComponent implements OnInit {
   users$: Observable<IUser>;
+  userFormVisible: boolean = false;
 
   constructor(private userService:UserService) { }
 
@@ -17,4 +18,7 @@ export class EditUsersComponent implements OnInit {
     this.users$ = this.userService.getUsersObs();
   }
 
+  showUserForm() {
+    this.userFormVisible = !this.userFormVisible;
+  }
 }

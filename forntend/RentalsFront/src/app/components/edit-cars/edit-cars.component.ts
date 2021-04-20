@@ -12,6 +12,7 @@ import { ManagerService } from 'src/app/services/manager.service';
 })
 export class EditCarsComponent implements OnInit {
   cars$: Observable<Car[]>;
+  carFormVisible: boolean = false;
 
   constructor(
     private managerService: ManagerService,
@@ -28,5 +29,9 @@ export class EditCarsComponent implements OnInit {
     if (aproveDelete) {
       this.managerService.deleteCar(car);
     }
+  }
+
+  showNewCarForm() {
+    this.carFormVisible = !this.carFormVisible;
   }
 }

@@ -1,0 +1,16 @@
+<h6>User Edit Form</h6>
+<form [formGroup]='userForm' (ngSubmit)='submitFrom()'>
+    First Name: <input formControlName='fName'> <br>
+    Last Name: <input formControlName='lName'> <br>
+    UserName: <input formControlName='userName'> <br>
+    Birth Date: <input value="{{user.birthDate}}" type="date" formControlName='birthDate'> <br>
+    <!-- Role: <input formControlName='role'> <br> -->
+    Role: 
+    <select formControlName='role'>
+        <option *ngFor='let role of roles' [ngValue]='role'>{{ role }}</option>
+    </select>
+    <br>
+    Password: <input formControlName='password'> <br>
+    <!-- Image Id: <input formControlName='imageId'> <br> -->
+    <button>Submit</button>
+</form>

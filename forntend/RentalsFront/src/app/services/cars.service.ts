@@ -30,12 +30,11 @@ export class CarsService {
   constructor(
     private http: HttpService,
     private authService: AuthenticationService,
-  )
-  {
+  ) {
     this.updateCarsState();
     this.updateRentHistories();
   }
-    
+
   // get and state ------------------------
 
   private updateCarsState() {
@@ -44,9 +43,9 @@ export class CarsService {
 
   private buildCars(): Observable<Car[]> {
     let skeletonCars$: Observable<ISkeletonCar[]> = this.http.get<ISkeletonCar[]>(this.carsEndpoint);
-    let categories$: Observable<CarCategory[]> = this.http.get<CarCategory[]>(this.categoryEndpoint);
-    let branches$: Observable<Branch[]> = this.http.get<Branch[]>(this.branchEndpoint);
-  
+    let categories$: Observable<CarCategory[]> = this.getCategoriesObs();
+    let branches$: Observable<Branch[]> = this.getBranchesObs();
+
     return forkJoin([skeletonCars$, categories$, branches$])
       .pipe(
         map(([skelicars, categories, branches]) => skelicars.map(skelicar => {
@@ -63,9 +62,7 @@ export class CarsService {
     let rentDataObs$: Observable<RentData[]> = this.http.get<RentData[]>(this.rentedCarsEndpoint);
 
     forkJoin([carsObs$, rentDataObs$]).pipe(
-      map(([cars, rentDataArr]) =>
-      {
-        console.log(rentDataArr);
+      map(([cars, rentDataArr]) => {
         if (rentDataArr != []) {
           return CarFactory.builRentHistoryArr(cars, rentDataArr);
         }
@@ -82,6 +79,14 @@ export class CarsService {
     return this.cars$.asObservable()
   }
 
+  getCategoriesObs(): Observable<CarCategory[]> {
+    return this.http.get<CarCategory[]>(this.categoryEndpoint, null, this.http.getBasicHeaders());
+  }
+
+  getBranchesObs(): Observable<Branch[]> {
+    return this.http.get<Branch[]>(this.branchEndpoint, null, this.http.getBasicHeaders());
+  }
+
   // ---------------------------------------
 
   // RentHistories --------------------------
@@ -95,34 +100,34 @@ export class CarsService {
     );
   }
 
-  
+
   // ------------------------------------------
-  
+
   // rent functionality -----------------------
-  
+
   rent(rentData: RentData) {
     if (!this.authService.user$.getValue()) {
       alert('You must be logged in as a registered user to rent cars')
     }
-    
+
     let car: Car = this.cars$.getValue().filter(c => c.id == rentData.carID)[0];
-    
+
     if (!car.availableForRent) {
       alert('This car is not available for rent, please choose another')
     }
     else {
       let skelitizedCar: ISkeletonCar = CarFactory.carToSkeleton(car);
       skelitizedCar.availableForRent = false;
-      
+
       this.http.put(this.carsEndpoint, skelitizedCar, this.http.getBasicHeaders()).subscribe(
         carRes => console.log(carRes)
-        );
-        this.updateCarsState();
-        
-        this.postRentHistory(rentData);
-      }
+      );
+      this.updateCarsState();
+
+      this.postRentHistory(rentData);
     }
-    
+  }
+
 
   // -------------------------------------------
 
@@ -142,14 +147,11 @@ export class CarsService {
 
     this.http.put<ISkeletonCar>(this.carsEndpoint, skeliCar, this.http.getAuthHeaders()).subscribe(
       res => console.log('updated car: ' + res)
-      
-    )
+    );
   }
 
   private putUpdatedReturnDateRentData(rentData: RentData) {
     rentData.carReturnDate = this.getReturnDate();
-    console.log('current rent data state: ' + rentData);
-    
 
     this.http.put(this.rentedCarsEndpoint, rentData, this.http.getAuthHeaders()).subscribe(
       res => console.log('changed rent data: ' + res)
@@ -157,7 +159,7 @@ export class CarsService {
   }
 
   calculatePrice(rentHistory: IRentHistory): number {
-    return Calculator.postReturnCost(rentHistory.rentData, this.getReturnDate(),  rentHistory.car.carCategory);
+    return Calculator.postReturnCost(rentHistory.rentData, this.getReturnDate(), rentHistory.car.carCategory);
   }
 
 
@@ -165,7 +167,7 @@ export class CarsService {
     this.returnDate$.next(date);
   }
 
-  getReturnDate():Date {
+  getReturnDate(): Date {
     return this.returnDate$.getValue();
   }
 
@@ -175,5 +177,12 @@ export class CarsService {
     this.http.delete(this.carsEndpoint, car.id).subscribe(
       res => alert('the following car was removed from the database: ' + res)
     );
+  }
+
+  postCar(car: Car) {
+    let skeliCar: ISkeletonCar = CarFactory.carToSkeleton(car);
+
+    this.http.post(this.carsEndpoint, skeliCar, this.http.getAuthHeaders())
+      .subscribe(carRes => console.log(carRes));
   }
 }

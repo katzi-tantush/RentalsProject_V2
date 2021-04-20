@@ -1,5 +1,15 @@
-<h3>Edit Cars</h3>
-<div *ngFor='let car of (cars$ | async)' class="car card">
-    <app-car [car]='car'></app-car>
-    <button (click)='deleteCar(car)'>Delete Car</button>
+<div class="card">
+    <span class="col-1"></span>
+    <h3>Edit Cars</h3>
+    <button (click)='showNewCarForm()'>Add New Car</button>
+    <div *ngIf='carFormVisible'>
+        <app-new-car-form></app-new-car-form>
+    </div>
+</div>
+<div>
+    <h3>Existing Cars</h3>
+    <div *ngFor='let car of (cars$ | async)' class="car card">
+        <app-car [car]='car'></app-car>
+        <button (click)='deleteCar(car)'>Delete Car</button>
+    </div>
 </div>

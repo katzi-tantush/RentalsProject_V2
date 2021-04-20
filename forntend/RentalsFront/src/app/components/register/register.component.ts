@@ -39,7 +39,6 @@ export class RegisterComponent implements OnInit {
       password: [this.newUser.password, Validators.required],
       imageId: [this.newUser.imageId],
       role: [this.newUser.role]
-      // TODO: add user image field
     });
   }
 

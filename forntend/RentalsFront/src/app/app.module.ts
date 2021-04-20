@@ -25,6 +25,8 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
 import { EditCarsComponent } from './components/edit-cars/edit-cars.component';
 import { EditUsersComponent } from './components/edit-users/edit-users.component';
 import { RoleFilterPipe } from './pipes/role-filter.pipe';
+import { EditUserFormComponent } from './components/edit-user-form/edit-user-form.component';
+import { NewCarFormComponent } from './components/new-car-form/new-car-form.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { RoleFilterPipe } from './pipes/role-filter.pipe';
     EditCarsComponent,
     EditUsersComponent,
     RoleFilterPipe,
+    EditUserFormComponent,
+    NewCarFormComponent,
   ],
   imports: [
     BrowserModule,

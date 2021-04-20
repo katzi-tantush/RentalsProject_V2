@@ -1,0 +1,18 @@
+<h5>New Car Form</h5>
+<form [formGroup]='carForm' (ngSubmit)='submitNewCar()'>
+    ID: <input formControlName='id'> <br>
+    Killometer Count: <input formControlName='killometerCount'> <br>
+    Category: 
+    <select formControlName='carCategory'>
+        <option *ngFor='let category of (categories$ | async)' [ngValue]='category'>
+            {{ category.manufacturer }} {{ category.model }}
+        </option>
+    </select> <br>
+    Branch: 
+    <select formControlName='branch'>
+        <option *ngFor='let branch of (branches$ | async)' [ngValue]='branch'>
+            {{ branch.name }}
+        </option>
+    </select> <br>
+    <button>Submit New Car</button>
+</form>
