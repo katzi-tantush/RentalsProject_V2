@@ -97,4 +97,11 @@ export class UserService {
     
     this.updateUsersState();
   }
+
+  deleteUser(user: IUser) {
+    this.http.delete(this.usersEndpoint, user.id).subscribe(
+      userRes => console.log(userRes)
+    );
+    this.updateUsersState();
+  }
 }

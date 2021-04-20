@@ -31,10 +31,12 @@ export class AuthenticationService {
         response => {
           this.user$.next(response.requestingUser);
           this.localStore.storeAuthenticatedUser(response);
+          alert('You have succesfuly logged in!')
           this.router.navigate(['home']);
         },
         error => {
           console.log(error);
+          alert('Login attemp failed - check dev tools for more info')
         }
       );
   }

@@ -21,4 +21,8 @@ export class EditUsersComponent implements OnInit {
   showUserForm() {
     this.userFormVisible = !this.userFormVisible;
   }
+
+  deleteUser(user: IUser) {
+    this.userService.deleteUser(user);
+  }
 }
