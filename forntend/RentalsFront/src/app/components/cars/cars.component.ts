@@ -13,6 +13,14 @@ import { UserService } from 'src/app/services/user.service';
 export class CarsComponent implements OnInit {
   cars$: Observable<Car[]>;
 
+  // filter options:
+  automatic: boolean | null;
+
+  before: boolean | null;
+  productionDate: Date | null;
+
+  manufaturerModelSearch: string | null;
+
   constructor(
     private carsService: CarsService,
     private userService: UserService,
@@ -27,5 +35,9 @@ export class CarsComponent implements OnInit {
     // TODO: add this to interested cars arr
     this.userService.selectedCar = car;
     this.router.navigate(['carDeal']);
+  }
+
+  listenToFilters() {
+    
   }
 }

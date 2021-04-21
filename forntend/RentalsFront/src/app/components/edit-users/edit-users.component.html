@@ -1,5 +1,5 @@
 <h3>Our Registered Users</h3>
-<div *ngFor='let user of (users$ | async) | roleFilter' class="card">
+<div *ngFor='let user of (users$ | async)' class="card">
     <h6>Full Name: {{ user.fName }} {{ user.lName }} <br>
         Role: {{ user.role }}
     </h6><button (click)='showUserForm()'>Edit User</button><button (click)='deleteUser(user)'>Delete User</button>

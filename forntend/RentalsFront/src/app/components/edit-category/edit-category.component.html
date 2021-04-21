@@ -1,0 +1,10 @@
+Manufacturer: {{category.manufacturer}} <br>
+Model: {{category.model}} <br>
+Gear: {{category.automatic? 'Automatic' : 'Manual'}} <br>
+Production Date: {{category.productionDate}} <br>
+<form [formGroup]='categoryForm' (ngSubmit)='updateCategory()'>
+    Daily Cost: <input formControlName='dailyCost'> <br>
+    Overdue Daily Cost: <input formControlName='overdueDailyCost'> <br>
+    <button>Submit Category Changes</button>
+</form>
+<button (click)='deleteCategory()'>Delete Category</button>

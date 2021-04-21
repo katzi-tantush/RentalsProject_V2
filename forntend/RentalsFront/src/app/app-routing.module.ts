@@ -3,9 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { CarDealComponent } from './components/car-deal/car-deal.component';
 import { CarsComponent } from './components/cars/cars.component';
 import { EditCarsComponent } from './components/edit-cars/edit-cars.component';
+import { EditCategoriesComponent } from './components/edit-categories/edit-categories.component';
 import { EditUsersComponent } from './components/edit-users/edit-users.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
+import { NewCarFormComponent } from './components/new-car-form/new-car-form.component';
+import { NewCategoryFormComponent } from './components/new-category-form/new-category-form.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { RentHistoryComponent } from './components/rent-history/rent-history.component';
@@ -24,6 +27,8 @@ const routes: Routes = [
   { path: 'returnCars', component: RetunCarsComponent },
   { path: 'editCars', component: EditCarsComponent },
   { path: 'editUsers', component: EditUsersComponent },
+  { path: 'editCategories', component: EditCategoriesComponent },
+  { path: 'newCategoryFrom', component: NewCategoryFormComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

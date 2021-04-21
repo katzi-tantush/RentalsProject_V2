@@ -25,8 +25,8 @@ export class HttpService {
     return this.http.post(`${this.baseUrl}/${endpoint}`, JSON.stringify(body), {headers:httpHeaders});
   }
 
-  put<T>(endpoint: string, body: T, httpHeaders?: HttpHeaders): Observable<T>{
-    return this.http.put<T>(`${this.baseUrl}/${endpoint}`, JSON.stringify(body), {headers: httpHeaders});
+  put<T>(endpoint: string, body: T): Observable<T>{
+    return this.http.put<T>(`${this.baseUrl}/${endpoint}`, JSON.stringify(body), {headers: this.getAuthHeaders()});
   }
 
   delete(endpoint:string, modelId:number):Observable<any> {

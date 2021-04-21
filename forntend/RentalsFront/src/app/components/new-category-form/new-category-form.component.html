@@ -1,0 +1,15 @@
+<h3>New Category Form</h3>
+<form [formGroup]='categoryForm' (ngSubmit)='submitNewCategory()'>
+    Manufacturer: <input formControlName='manufacturer'> <br>
+    Model: <input formControlName='model'> <br>
+    Gear: 
+    <select formControlName='automatic'>
+        <option [ngValue]='null'></option>
+        <option [ngValue]='true'>Automatic</option>
+        <option [ngValue]='false'>Manual</option>
+    </select> <br>
+    Production Date: <input type="date" formControlName='productionDate'> <br>
+    Daily Cost: <input formControlName='dailyCost'> <br>
+    Overdue Daily Cost: <input formControlName='overdueDailyCost'> <br>
+    <button>Submit New Category</button>
+</form>

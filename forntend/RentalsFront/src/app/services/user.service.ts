@@ -75,6 +75,7 @@ export class UserService {
         routerOutlerParamsArr.push(new RouterOutletParams('returnCars', 'View And Edit Current Contracts'));
         routerOutlerParamsArr.push(new RouterOutletParams('editCars', 'Edit Cars'));
         routerOutlerParamsArr.push(new RouterOutletParams('editUsers', 'Edit Users'));
+        routerOutlerParamsArr.push(new RouterOutletParams('editCategories', 'Edit Car Categories'));
         break;
     }
 
@@ -92,7 +93,7 @@ export class UserService {
   }
 
   putUser(modifiedUser: IUser) {
-    this.http.put(this.usersEndpoint, modifiedUser, this.http.getAuthHeaders())
+    this.http.put(this.usersEndpoint, modifiedUser)
       .subscribe(userRes => console.log(userRes));
     
     this.updateUsersState();

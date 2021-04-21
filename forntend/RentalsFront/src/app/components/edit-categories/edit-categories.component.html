@@ -1,0 +1,4 @@
+<h3>Edit Car Categories</h3> <button (click)='toNewCategoryForm()'>Add New Category</button>
+<div class="card" *ngFor='let category of categories$ | async'>
+    <app-edit-category [category]='category'></app-edit-category>
+</div>

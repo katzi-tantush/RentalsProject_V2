@@ -24,9 +24,14 @@ import { RetunCarsComponent } from './components/retun-cars/retun-cars.component
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { EditCarsComponent } from './components/edit-cars/edit-cars.component';
 import { EditUsersComponent } from './components/edit-users/edit-users.component';
-import { RoleFilterPipe } from './pipes/role-filter.pipe';
 import { EditUserFormComponent } from './components/edit-user-form/edit-user-form.component';
 import { NewCarFormComponent } from './components/new-car-form/new-car-form.component';
+import { AutomaticPipe } from './pipes/automatic.pipe';
+import { ProductionDatePipe } from './pipes/production-date.pipe';
+import { ManufacturerModelPipe } from './pipes/manufacturer-model.pipe';
+import { EditCategoriesComponent } from './components/edit-categories/edit-categories.component';
+import { EditCategoryComponent } from './components/edit-category/edit-category.component';
+import { NewCategoryFormComponent } from './components/new-category-form/new-category-form.component';
 
 @NgModule({
   declarations: [
@@ -49,9 +54,14 @@ import { NewCarFormComponent } from './components/new-car-form/new-car-form.comp
     DatePickerComponent,
     EditCarsComponent,
     EditUsersComponent,
-    RoleFilterPipe,
     EditUserFormComponent,
     NewCarFormComponent,
+    AutomaticPipe,
+    ProductionDatePipe,
+    ManufacturerModelPipe,
+    EditCategoriesComponent,
+    EditCategoryComponent,
+    NewCategoryFormComponent,
   ],
   imports: [
     BrowserModule,

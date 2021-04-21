@@ -1,13 +1,31 @@
 <h3>
     We Got Cars Dude - Check It
 </h3>
-<!-- {{cars$ | async | json}} -->
-<!-- <div *ngIf="(cars$ | async) as cars"> -->
-    <div class="card carCard" *ngFor='let car of cars$ | async'>
-        <!-- <div *ngIf="car"> -->
+<div>
+    <h6>Search Filters:</h6>
+
+    Gear: 
+    <select [(ngModel)]='automatic'>
+        <option [ngValue]='null'></option>
+        <option [ngValue]='true'>Automatic</option>
+        <option [ngValue]='false'>Manual</option>
+    </select>
+
+    Production Date:  
+    <select [(ngModel)]='before'>
+        <option [ngValue]='null'></option>
+        <option [ngValue]='true'>Before</option>
+        <option [ngValue]='false'>After</option>
+    </select>
+    <input type="date" [(ngModel)]='productionDate'>
+
+    Manufacturer Or Model: <input [(ngModel)]='manufaturerModelSearch'> <br>
+
+    
+</div>
+    <div class="card carCard" *ngFor='let car of (cars$ | async) 
+    | automatic: automatic | productionDate: productionDate : before | manufacturerModel : manufaturerModelSearch'>
             <app-car [car]='car'></app-car>
             <hr>
             <button (click)='goToRent(car)'>Rent This Car</button>
-        <!-- </div> -->
     </div>
-<!-- </div> -->
