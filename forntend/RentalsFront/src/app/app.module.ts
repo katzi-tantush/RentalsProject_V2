@@ -32,6 +32,7 @@ import { ManufacturerModelPipe } from './pipes/manufacturer-model.pipe';
 import { EditCategoriesComponent } from './components/edit-categories/edit-categories.component';
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
 import { NewCategoryFormComponent } from './components/new-category-form/new-category-form.component';
+import { ViewedCarsComponent } from './components/viewed-cars/viewed-cars.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { NewCategoryFormComponent } from './components/new-category-form/new-cat
     EditCategoriesComponent,
     EditCategoryComponent,
     NewCategoryFormComponent,
+    ViewedCarsComponent,
   ],
   imports: [
     BrowserModule,

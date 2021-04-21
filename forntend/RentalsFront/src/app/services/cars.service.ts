@@ -43,7 +43,7 @@ export class CarsService {
   }
 
   updateCategories() {
-    this.http.get<CarCategory[]>(this.categoryEndpoint)
+    this.http.get<CarCategory[]>(this.categoryEndpoint, null, this.http.getBasicHeaders())
       .subscribe(categoryRes => this.categories$.next(categoryRes));
   }
 
@@ -70,7 +70,7 @@ export class CarsService {
       this.postRentData(rentData);
     }
   }
-  
+
   setReturnDate(date: Date) {
     this.returnDate$.next(date);
   }
@@ -117,12 +117,13 @@ export class CarsService {
 
     return forkJoin([skeletonCars$, categories$, branches$])
       .pipe(
-        map(([skelicars, categories, branches]) => skelicars.map(skelicar => {
-          let category = categories.filter(c => c.id == skelicar.carCategoryID)[0];
-          let branch = branches.filter(b => b.id == skelicar.branchID)[0];
-          let car: Car = CarFactory.BuildCar(skelicar, branch, category);
-          return car;
-        }))
+        map(([skelicars, categories, branches]) =>
+          skelicars.map(skelicar => {
+            let category = categories.filter(c => c.id == skelicar.carCategoryID)[0];
+            let branch = branches.filter(b => b.id == skelicar.branchID)[0];
+            let car: Car = CarFactory.BuildCar(skelicar, branch, category);
+            return car;
+          }))
       );
   }
 
@@ -162,11 +163,11 @@ export class CarsService {
 
   // categories ---------------------------------
   postcategory(category: CarCategory) {
-    this.http.post(this.categoryEndpoint, category)
+    this.http.post(this.categoryEndpoint, category, this.http.getAuthHeaders())
       .subscribe(categoryRes => console.log(categoryRes));
   }
 
-  putCategory(category:CarCategory) {
+  putCategory(category: CarCategory) {
     this.http.put(this.categoryEndpoint, category)
       .subscribe(categoryRes => console.log(categoryRes));
   }

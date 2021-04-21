@@ -4,16 +4,16 @@
 <div>
     <h6>Search Filters:</h6>
 
-    Gear: 
+    Gear:
     <select [(ngModel)]='automatic'>
         <option [ngValue]='null'></option>
         <option [ngValue]='true'>Automatic</option>
         <option [ngValue]='false'>Manual</option>
     </select>
 
-    Production Date:  
+    Production Date:
     <select [(ngModel)]='before'>
-        <option [ngValue]='null'></option>
+        <option [ngValue]='null'>Before/After</option>
         <option [ngValue]='true'>Before</option>
         <option [ngValue]='false'>After</option>
     </select>
@@ -21,11 +21,11 @@
 
     Manufacturer Or Model: <input [(ngModel)]='manufaturerModelSearch'> <br>
 
-    
+
 </div>
-    <div class="card carCard" *ngFor='let car of (cars$ | async) 
+<div class="card carCard" *ngFor='let car of (cars$ | async) 
     | automatic: automatic | productionDate: productionDate : before | manufacturerModel : manufaturerModelSearch'>
-            <app-car [car]='car'></app-car>
-            <hr>
-            <button (click)='goToRent(car)'>Rent This Car</button>
-    </div>
+    <app-car [car]='car'></app-car>
+    <hr>
+    <button (click)='goToRent(car)'>Rent This Car</button>
+</div>
