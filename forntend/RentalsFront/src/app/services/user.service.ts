@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {  map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IRentHistory } from '../models/Car-Models/IRentHistory';
 import { Car } from '../models/Car-Models/Car';
 import { AuthenticationService } from './authentication.service';
@@ -10,12 +10,14 @@ import { RouterOutletParams } from '../Utils/RouterOutletParams';
 import { IUser } from '../models/User-Models/user';
 import { HttpService } from './http.service';
 import { roles } from '../constants/roles';
+import { LocalStoreService } from './local-store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private usersEndpoint: string = 'users';
+  private viewedCars$: Observable<Car[]>;
   userRoles: string[] = roles;
 
   private allUsers$: BehaviorSubject<IUser> = new BehaviorSubject(null);
@@ -25,12 +27,15 @@ export class UserService {
   constructor(
     private authService: AuthenticationService,
     private carService: CarsService,
+    private localStore: LocalStoreService,
     private http: HttpService
   ) {
     this.loggedInUser$ = authService.getLoggedInUserObs();
     this.updateUsersState();
+    this.viewedCars$ = this.localStore.getStoredCarsObs();
   }
 
+  // returns the price for renting a car between the input dates
   calculatePreRentCost(start: Date, end: Date): number {
     let millisecondsDiff: number = Math.abs(+start - +end);
     let daysDiff: number = Math.ceil(millisecondsDiff / (1000 * 60 * 60 * 24))
@@ -40,6 +45,7 @@ export class UserService {
     return rentPrice;
   }
 
+  // TODO: test this
   getRentHistoryByUser(): Observable<IRentHistory[]> {
     let userId: number;
     this.authService.getLoggedInUserObs().subscribe(
@@ -51,7 +57,8 @@ export class UserService {
     );
   }
 
-  getRouterParams(): Observable<RouterOutletParams[]>{
+  // retrun an observable of the user route params according to user role
+  getRouterParams(): Observable<RouterOutletParams[]> {
     return this.loggedInUser$.pipe(
       map(userRes => {
         if (userRes) {
@@ -62,6 +69,7 @@ export class UserService {
     );
   }
 
+  // retrun an array of the user route params according to user role
   private getRoleNavigation(userRole: string): RouterOutletParams[] {
     let routerOutlerParamsArr: RouterOutletParams[] = [];
     switch (userRole) {
@@ -82,27 +90,35 @@ export class UserService {
     return routerOutlerParamsArr;
   }
 
+  // updates the current user state
   private updateUsersState() {
     this.http.get<IUser>(this.usersEndpoint, null, this.http.getAuthHeaders()).subscribe(
       ussersRes => this.allUsers$.next(ussersRes)
     )
   }
 
-  getUsersObs(): Observable<IUser>{
+  // returns an observable of the current user
+  getUsersObs(): Observable<IUser> {
     return this.allUsers$.asObservable();
   }
 
+  // modifies an existing user in the database
   putUser(modifiedUser: IUser) {
     this.http.put(this.usersEndpoint, modifiedUser)
       .subscribe(userRes => console.log(userRes));
-    
+
     this.updateUsersState();
   }
 
+  // deletes an existing user in the database
   deleteUser(user: IUser) {
     this.http.delete(this.usersEndpoint, user.id).subscribe(
       userRes => console.log(userRes)
     );
     this.updateUsersState();
+  }
+
+  getViewedCarsObs(): Observable<Car[]>{
+    return this.viewedCars$;
   }
 }

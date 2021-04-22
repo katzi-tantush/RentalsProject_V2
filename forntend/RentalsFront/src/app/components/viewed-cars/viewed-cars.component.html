@@ -1,1 +1,4 @@
-<p>viewed-cars works!</p>
+<h3>Cars That You Were Interested In</h3>
+<div *ngFor='let car of viewedCars$ | async' class="card carCard">
+    <app-car [car]='car'></app-car>
+</div>

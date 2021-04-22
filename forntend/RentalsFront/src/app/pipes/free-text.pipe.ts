@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { Car } from '../models/Car-Models/Car';
 
 @Pipe({
-  name: 'manufacturerModel'
+  name: 'freeTextFilter'
 })
-export class ManufacturerModelPipe implements PipeTransform {
+export class FreeTextFilter implements PipeTransform {
 
   transform(cars: Car[], searchValue: string): Car[] {
     if (!cars || !searchValue) {
@@ -14,9 +14,11 @@ export class ManufacturerModelPipe implements PipeTransform {
 
     return cars
       .filter(c =>
-        c.carCategory.manufacturer.toLowerCase().indexOf(searchValue) !== -1
+        c.carCategory.manufacturer.toLowerCase().indexOf(searchValue) > -1
         ||
-        c.carCategory.model.toLowerCase().indexOf(searchValue) !== -1
+        c.carCategory.model.toLowerCase().indexOf(searchValue) > -1
+        ||
+        c.branch.address.toLowerCase().lastIndexOf(searchValue) > -1
       );
   }
 

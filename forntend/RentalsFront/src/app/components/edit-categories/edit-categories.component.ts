@@ -24,5 +24,4 @@ export class EditCategoriesComponent implements OnInit {
   toNewCategoryForm() {
     this.router.navigate(['newCategoryFrom']);
   }
-
 }

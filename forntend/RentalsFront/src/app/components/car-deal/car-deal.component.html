@@ -4,6 +4,9 @@
     Start Date: <input type="date" #startDate formControlName='contractStartDate'> <br>
     Return Date: <input type="date" formControlName='contractEndDate'> <br>
 </form>
+<div>
+    Daily Rent Cost: {{selectedCar.carCategory.dailyCost}}
+</div>
 <button (click)='showPriceMsg()'>Show Price</button>
 <div *ngIf='priceMsgVisible'>
         <div *ngIf="price">

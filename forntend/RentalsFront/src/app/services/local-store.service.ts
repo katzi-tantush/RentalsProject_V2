@@ -17,7 +17,7 @@ export class LocalStoreService {
   private storedCars$: BehaviorSubject<Car[] | null> = new BehaviorSubject(null);
 
   constructor() {
-    // this.set(this.storedCarsKey, null);
+    this.updateStoredCars();
   }
 
   // sets a key value pair in local storage
@@ -68,15 +68,24 @@ export class LocalStoreService {
         }
       })
       carInStorage ? null : storedCars.push(car);
-
     }
     this.set(this.storedCarsKey, JSON.stringify(storedCars))
-    console.log(this.getStoredCars());
+    this.updateStoredCars();
+    // console.log(` in localStore: ${JSON.stringify(this.getStoredCars())}`);
   }
 
   // retrieves viewed cars from local storage
-  private getStoredCars(){
+  private getStoredCars(): Car[]{
     return JSON.parse(localStorage.getItem(this.storedCarsKey));
+  }
+
+  getStoredCarsObs() {
+    return this.storedCars$;
+  }
+
+  // updates the stored cars state
+  private updateStoredCars() {
+    this.storedCars$.next(this.getStoredCars());
   }
 
 }

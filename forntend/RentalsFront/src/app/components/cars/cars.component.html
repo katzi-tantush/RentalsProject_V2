@@ -19,14 +19,33 @@
     </select>
     <input type="date" [(ngModel)]='productionDate'>
 
-    Manufacturer Or Model: <input [(ngModel)]='manufaturerModelSearch'> <br>
+    Manufacturer: 
+    <select [(ngModel)]='manufacturer'>
+        <option [ngValue]='null'></option>
+        <option *ngFor='let category of categories$ | async' [ngValue]='category.manufacturer'>{{category.manufacturer}}</option>
+    </select>
+
+    Model:
+    <select [(ngModel)]='model'>
+        <option [ngValue]='null'></option>
+        <option *ngFor='let category of categories$ | async' [ngValue]='category.model'>{{category.model}}</option>
+    </select>
+
+    Free Text: <input [(ngModel)]='searchValue'> <br>
 
 
 </div>
-<div class="card carCard" *ngFor='let car of (cars$ | async) 
-    | automatic: automatic | productionDate: productionDate : before | manufacturerModel : manufaturerModelSearch'>
-    <app-car [car]='car'></app-car>
+<div class="row">
+    <div class="card carCard" *ngFor='let car of (cars$ | async) 
+    | automatic: automatic | productionDate: productionDate : before | freeTextFilter : searchValue
+    | manufacturer: manufacturer | model: model'>
+        <app-car [car]='car'></app-car>
+        <hr>
+        <button (click)='goToRent(car)'>Rent This Car</button>
+    </div>
+</div>
+
+<div>
     <hr>
-    <button (click)='goToRent(car)'>Rent This Car</button>
+    <app-viewed-cars></app-viewed-cars>
 </div>
-<hr>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Car } from 'src/app/models/Car-Models/Car';
+import { CarCategory } from 'src/app/models/Car-Models/CarCategory';
 import { CarsService } from 'src/app/services/cars.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -12,14 +13,15 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CarsComponent implements OnInit {
   cars$: Observable<Car[]>;
+  categories$: Observable<CarCategory[]>;
 
   // filter options:
   automatic: boolean | null;
-
   before: boolean | null;
   productionDate: Date | null;
-
-  manufaturerModelSearch: string | null;
+  searchValue: string | null;
+  manufacturer: string | null;
+  model: string | null;
 
   constructor(
     private carsService: CarsService,
@@ -29,15 +31,12 @@ export class CarsComponent implements OnInit {
 
   ngOnInit(): void {
     this.cars$ = this.carsService.getCarsObs();
+    this.categories$ = this.carsService.getCategoriesObs();
   }
 
   goToRent(car) {
-    // TODO: add this to interested cars arr
     this.userService.selectedCar = car;
     this.router.navigate(['carDeal']);
   }
 
-  listenToFilters() {
-    
-  }
 }

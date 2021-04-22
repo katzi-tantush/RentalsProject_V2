@@ -28,11 +28,13 @@ import { EditUserFormComponent } from './components/edit-user-form/edit-user-for
 import { NewCarFormComponent } from './components/new-car-form/new-car-form.component';
 import { AutomaticPipe } from './pipes/automatic.pipe';
 import { ProductionDatePipe } from './pipes/production-date.pipe';
-import { ManufacturerModelPipe } from './pipes/manufacturer-model.pipe';
+import { FreeTextFilter } from './pipes/free-text.pipe';
 import { EditCategoriesComponent } from './components/edit-categories/edit-categories.component';
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
 import { NewCategoryFormComponent } from './components/new-category-form/new-category-form.component';
 import { ViewedCarsComponent } from './components/viewed-cars/viewed-cars.component';
+import { ManufacturerPipe } from './pipes/manufacturer.pipe';
+import { ModelPipe } from './pipes/model.pipe';
 
 @NgModule({
   declarations: [
@@ -59,11 +61,13 @@ import { ViewedCarsComponent } from './components/viewed-cars/viewed-cars.compon
     NewCarFormComponent,
     AutomaticPipe,
     ProductionDatePipe,
-    ManufacturerModelPipe,
+    FreeTextFilter,
     EditCategoriesComponent,
     EditCategoryComponent,
     NewCategoryFormComponent,
     ViewedCarsComponent,
+    ManufacturerPipe,
+    ModelPipe,
   ],
   imports: [
     BrowserModule,
