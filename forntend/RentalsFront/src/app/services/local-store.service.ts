@@ -17,7 +17,8 @@ export class LocalStoreService {
   private storedCars$: BehaviorSubject<Car[] | null> = new BehaviorSubject(null);
 
   constructor() {
-   }
+    // this.set(this.storedCarsKey, null);
+  }
 
   // sets a key value pair in local storage
   private set(itemKey:string, value: any) {
@@ -35,11 +36,13 @@ export class LocalStoreService {
     this.set(this.loggedInUserKey, JSON.stringify(loggedInUser));
   }
 
+  // set a local storage item for logged in user
   storeAuthenticatedUser(authenticatedUser: IAuthenticatedUser) {
     this.setToken(authenticatedUser.responseToken);
     this.setLoggedInUser(authenticatedUser.requestingUser);
   }
 
+  // gets the stored user from local storage
   getStoredUser(): ILoggedInUser {
     return JSON.parse(window.localStorage.getItem(this.loggedInUserKey)) as ILoggedInUser;
   }
@@ -49,31 +52,31 @@ export class LocalStoreService {
     return window.localStorage.getItem(this.tokenKey);
   }
 
+  // if the viewed car is not already in local storage: adds it
   storeCarToViewdCars(car: Car) {
-    // localStorage.setItem(this.storedCarsKey, null);
-
     let storedCars: Car[] = this.getStoredCars();
     if (!storedCars) {
       storedCars = [car];
     }
     else {
       storedCars = <Car[]>storedCars;
-      if (storedCars.filter(c => c['id'] == car.id).length > 0) {
-        
-        console.log('before filter' + JSON.stringify(storedCars));
-        storedCars.push(car);
-        console.log('after filter' + JSON.stringify(storedCars));
-      }
-    }
-    // console.log('before local storage' + JSON.stringify(storedCars));
-    
-    localStorage.setItem(this.storedCarsKey, JSON.stringify(storedCars))
+      let carInStorage: boolean = false;
 
-    // console.log('after local storage' + JSON.stringify(this.getStoredCars()));
-    
+      storedCars.forEach(storedCar => {
+        if (storedCar['id'] == car.id) {
+          carInStorage = true;
+        }
+      })
+      carInStorage ? null : storedCars.push(car);
+
+    }
+    this.set(this.storedCarsKey, JSON.stringify(storedCars))
+    console.log(this.getStoredCars());
   }
 
+  // retrieves viewed cars from local storage
   private getStoredCars(){
     return JSON.parse(localStorage.getItem(this.storedCarsKey));
   }
+
 }
